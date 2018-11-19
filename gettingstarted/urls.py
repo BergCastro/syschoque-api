@@ -1,10 +1,12 @@
 from django.urls import path, include
 
 from django.contrib import admin
+from rest_framework import routers
 from teste_fisico import urls as teste_fisico_urls
+from p1.api.viewsets import ControleOficioViewSet
 admin.autodiscover()
 
-import hello.views
+
 
 # To add a new path, first import the app:
 # import blog
@@ -14,13 +16,12 @@ import hello.views
 #
 # Learn more here: https://docs.djangoproject.com/en/2.1/topics/http/urls/
 
+router = routers.DefaultRouter()
+router.register(r'controleoficio', ControleOficioViewSet)
+
 urlpatterns = [
-    path("", hello.views.index, name="index"),
-    path("db/", hello.views.db, name="db"),
-    path('testes/', include(teste_fisico_urls)),
+    path('', include(router.urls)),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
-    #path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    #path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     path("admin/", admin.site.urls),
 ]
 
